@@ -76,18 +76,23 @@ int main( int argc, char* argv[ ] )
 
     uint32_t txTm_s;         // 32 bits and the most important field the client cares about. Transmit time-stamp seconds.
     uint32_t txTm_f;         // 32 bits. Transmit time-stamp fraction of a second.
-
+    uint32_t ext_f1;         // 32 bits. Extension Field 1
+    uint64_t ext_f2;         // 64-128 bits. Extension Field 2
   } ntp_packet;              // Total: 384 bits or 48 bytes.
 
   // Create and zero out the packet. All 48 bytes worth.
 
-  ntp_packet packet = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+  ntp_packet packet = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
   memset( &packet, 0, sizeof( ntp_packet ) );
 
   // Set the first byte's bits to 00,011,011 for li = 0, vn = 3, and mode = 3. The rest will be left set to zero.
 
   *( ( char * ) &packet + 0 ) = 0x1b; // Represents 27 in base 10 or 00011011 in base 2.
+
+  // Set last two fields to something we want to send
+  packet.ext_f1 = 0xFF;
+  packet.ext_f2 = 0xFFF;
 
   // Create a UDP socket, convert the host-name to an IP address, set the port number,
   // connect to the server, send the packet, and then read in the return packet.
