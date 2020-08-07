@@ -91,13 +91,9 @@ int main( int argc, char* argv[ ] )
   *( ( char * ) &packet + 0 ) = 0x1b; // Represents 27 in base 10 or 00011011 in base 2.
 
   // Set last two fields to something we want to send
-  //packet.ext_f1 = 0xFF;
-  //packet.ext_f2 = 0xFFF;
-
-  //packet.ext_f1 >> 
-  packet.ext_f1 = 0xDEAD;
-  packet.ext_f2 = 0x1122AABBCCDDEEFF;
-
+  //packet.ext_f1 = 0xCEFAEDFE;
+  packet.ext_f1 = 0xEFBEADDE;
+  packet.ext_f2 = 0xBEBAFECABEBAFECA;
 
   // Create a UDP socket, convert the host-name to an IP address, set the port number,
   // connect to the server, send the packet, and then read in the return packet.
